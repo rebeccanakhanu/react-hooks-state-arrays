@@ -1,26 +1,38 @@
 import React, { useState } from "react";
-import { spicyFoods, getNewRandomSpicyFood } from "../data";
 
 function SpicyFoodList() {
-  const [foods, setFoods] = useState(spicyFoods);
+  const [spicyFoods, setSpicyFoods] = useState([]);
 
-  function handleAddFood() {
-    const newFood = getNewRandomSpicyFood();
-    console.log(newFood);
+  function addNewFood() {
+    const newFood = {
+      id: spicyFoods.length,
+      name: `Spicy Food #${spicyFoods.length + 1}`,
+      cuisine: "Unknown",
+      heatLevel: Math.floor(Math.random() * 10) + 1
+    };
+
+    // create a new array with the new food added at the end
+    const newFoods = [...spicyFoods, newFood];
+
+    // set the state with the new array of foods
+    setSpicyFoods(newFoods);
   }
-
-  const foodList = foods.map((food) => (
-    <li key={food.id}>
-      {food.name} | Heat: {food.heatLevel} | Cuisine: {food.cuisine}
-    </li>
-  ));
 
   return (
     <div>
-      <button onClick={handleAddFood}>Add New Food</button>
-      <ul>{foodList}</ul>
+      <button onClick={addNewFood}>Add New Spicy Food</button>
+      <ul>
+        {spicyFoods.map(food => (
+          <li key={food.id}>
+            {food.name} ({food.cuisine}, Heat Level: {food.heatLevel})
+          </li>
+        ))}
+      </ul>
     </div>
   );
 }
 
 export default SpicyFoodList;
+
+
+
